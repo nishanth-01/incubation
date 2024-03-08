@@ -16,6 +16,9 @@ public class Server {
 			System.exit(1);
 		}
 
+		System.out.println("Press CTRL+C to stop");
+		System.out.println();
+
 		for(;;) {
 			try {
 				Socket clientSocket = serverSocket.accept();

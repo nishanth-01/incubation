@@ -30,6 +30,7 @@ public class Server {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				OutputStream writer = connection.getOutputStream();
 
+				System.out.println("Press CTRL+C to stop");
 				System.out.println("Enter blank message to print recived messages");
 				System.out.println();
 
