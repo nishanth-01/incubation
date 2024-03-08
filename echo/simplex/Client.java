@@ -1,4 +1,5 @@
 import java.io.OutputStream;
+import java.io.IOException;
 import java.net.Socket;
 
 import static echo.Config.ADDRESS;
@@ -10,19 +11,25 @@ public class Client {
 			System.exit(1);
 		}
 
+		Socket socket = null;
+
 		try {
-			Socket socket = new Socket(
-					ADDRESS.getAddress(), ADDRESS.getPort());
+			socket = new Socket(ADDRESS.getAddress(), ADDRESS.getPort());
+		} catch (IOException e) {
+			System.err.println("Client: unable to create server");
+			System.exit(1);
+		}
 
-			OutputStream outputStream = socket.getOutputStream();
+		try {
+			OutputStream outgoingStream = socket.getOutputStream();
+			final String msg = String.join(" ", args);
 
-			outputStream.write(String.join(" ", args).getBytes());
-
-			outputStream.write((byte) '\n');
+			outgoingStream.write(msg.getBytes());
+			outgoingStream.write((byte) '\n');
 
 			socket.close();
 		} catch (Exception e) {
-			System.out.println("Client: something went wrong");
+			System.err.println("Client: something went wrong");
 			System.exit(1);
 		}
 	}

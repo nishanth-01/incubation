@@ -1,6 +1,7 @@
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.InputStream;
+import java.io.IOException;
 
 import static echo.Config.ADDRESS;
 
@@ -10,9 +11,15 @@ public class Server {
 
 		try {
 			serverSocket = new ServerSocket();
+		} catch (IOException e) {
+			System.err.println("Server: unable to create socket");
+			System.exit(1);
+		}
+
+		try {
 			serverSocket.bind(ADDRESS);
-		} catch (Exception e) {
-			System.out.println("Server: unable to create/bind socket");
+		} catch (IOException e) {
+			System.err.println("Server: unable to bind socket to " + ADDRESS);
 			System.exit(1);
 		}
 
